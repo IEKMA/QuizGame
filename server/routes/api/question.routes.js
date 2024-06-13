@@ -1,9 +1,9 @@
 const router = require("express").Router();
-const { Question ,Topic } = require("");
+const { Questions } = require("../../db/models");
 
 router.get("/", async (req, res) => {
   try {
-    const questions = await Question.findAll({ where: req.query });
+    const questions = await Questions.findAll();
     res.status(200).json({ message: "success", questions });
   } catch ({ message }) {
     res.status(500).json({ error: message });
@@ -11,9 +11,12 @@ router.get("/", async (req, res) => {
 });
 router.get("/:questionId", async (req, res) => {
     try {
-        const question = await Question.findone({ where:{id:questionId}, includes:Topic });
+      const{questionId}=req.params
+        const question = await Questions.findOne({ where:{id: questionId} });
         res.status(200).json({ message: "success", question });
       } catch ({ message }) {
         res.status(500).json({ error: message });
       }
 });
+
+module.exports = router;

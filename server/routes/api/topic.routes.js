@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const { Topic } = require("");
+const { Topic, Question } = require("");
 
 router.get("/", async (req, res) => {
   try {
@@ -10,13 +10,15 @@ router.get("/", async (req, res) => {
   }
 });
 router.get("/:topicsId", async (req, res) => {
-    try {
-        const topic = await Topic.findone({ where:{id:topicsId} });
-        res.status(200).json({ message: "success", topic });
-      } catch ({ message }) {
-        res.status(500).json({ error: message });
-      }
+  try {
+    const topic = await Topic.findone({
+      where: { id: topicsId },
+      includes: Question,
+    });
+    res.status(200).json({ message: "success", topic });
+  } catch ({ message }) {
+    res.status(500).json({ error: message });
+  }
 });
-asdasdasdsadasdasdasdaadasdsaddassd
 
 module.exports = router;

@@ -9,6 +9,7 @@ router.get("/", async (req, res) => {
     res.status(500).json({ error: message });
   }
 });
+
 router.get("/:topicId/questions", async (req, res) => {
   try {
     const {topicId} = req.params
